@@ -78,7 +78,12 @@ sales %>% filter(region == '01-East' & revenue > 400000) %>% select(partnum, reg
 sales %>% filter(region == '01-East' | revenue > 400000) %>% select(partnum, region, revenue) %>% head
 
 names(sales)
+# filtering in terms of customer name
 sales %>% group_by(custname) %>% 
+  summarize(Revenue = sum(revenue)) %>% arrange(desc(Revenue))
+
+# filtering in terms of region
+sales %>% group_by(region) %>% 
   summarize(Revenue = sum(revenue)) %>% arrange(desc(Revenue))
 
 
@@ -97,7 +102,11 @@ head(df5)
 
 # Freqency --------
 names(sales)
-head(sort(table(sales$custname), decreasing=T))
+# which customer bought how many times
+table(sales$custname)
+# Sort the previous information in descending order
+head(sort(table(sales$custname), decreasing=T), n=10) # Initial 10 inputs
+tail(sort(table(sales$custname), decreasing=T), n=10) # Last 10 values
 
 #xtab
 #
@@ -106,7 +115,7 @@ head(sort(xtabs(~ custname, sales), decreasing=T))
 #
 library(dplyr)
 sales %>% dplyr::count(custname, sort=TRUE)
-
+# or
 sales %>% dplyr::group_by(custname) %>% dplyr::summarise(n = n()) %>% dplyr::arrange(desc(n))
 
 
@@ -121,12 +130,14 @@ head(df2a[order(-df2a$freq),])
 # Summarise by Part Num
 
 df3a= aggregate(sales$revenue, by=list(sales$partnum), FUN=sum)
+# Using minus with decresing order means descending order
 df3a[order(-df3a$x),][1:5,]
 
 df3b = aggregate(revenue ~ partnum, data=sales, FUN=sum)
 head(df3b)
 head(df3b[order(df3b$revenue, decreasing=T),])
 
+# summarise(n = n() means how many times that part was bought
 sales %>% dplyr::group_by(partnum) %>% dplyr::summarise(n = n()) %>% dplyr::arrange(desc(n))
 
 
