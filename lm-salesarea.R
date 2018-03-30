@@ -97,20 +97,22 @@ qt(0.95+.025, 14-2)
 
 
 #Assumption : Graphical Analysis
-plot(x=X, y=residuals(fit1)) # Linearity
+plot(x=df$X, y=residuals(fit1)) # Linearity
+abline(h=0)
 plot(residuals(fit1))
 car::durbinWatsonTest(fit1)
 
 #Normality
-hist(residuals(fit1), freq=F)
-lines(density(residuals(fit1)))
+hist(residuals(fit1))  # histogram = frequency districution
+hist(residuals(fit1), freq=F)  # percentage form in Y axis
+lines(density(residuals(fit1))) # need to be bell shaped curve, that is what the normal distribution says
 
 (h=hist(residuals(fit1)))
 names(h)
 cbind(h$breaks, h$counts)
 
-qqnorm(residuals(fit1))
-qqline(residuals(fit1))
+qqnorm(residuals(fit1))  # Normality of RESIDUALS
+qqline(residuals(fit1)) # Line that passes through all points that means that my data are almost normal
 
 residuals(fit1)
 rstandard(fit1)
@@ -125,16 +127,21 @@ plot(y=residuals(fit1), x=X)
 
 
 #Outlier Analysis
-df1
-df1[14,]
-df1$Y
+df
+df[14,]
+df$Y
 residuals(fit1)
-boxplot( df1$Y, df1$predict, residuals(fit1), names=c('Y','predictY', 'Residuals'))
+boxplot( df$Y)
+boxplot( fitted(fit1))
+boxplot( df$Y, fitted(fit1), residuals(fit1), names=c('Actual Sales','Predicted sales', 'Residuals'))
 abline(h=c(4.1, 5.97, -1.87))
+
 boxplot(residuals(fit1), names=c('Residuals'))
 identify(rep(1, length(residuals(fit1))), residuals(fit1), labels = seq_along(residuals(fit1)))
 
 car::outlierTest(fit1)
-df1[14,]
+df[14,]
 
-car::outlierTest(lm(Y ~ X, data=df1[-14,]))
+car::outlierTest(lm(Y ~ X, data=df[-14,])) # New modelling is done excluding the 14th row
+df
+
