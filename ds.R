@@ -152,13 +152,14 @@ df$name
 df[,1:2]
 df[3:4,1:3]
 
-# Incorporating another columnin the data.frame
+# Incorporating another column in the data.frame
 df$gender = c('M', 'F', 'M', 'M')
 df
 str(df)
 
-# converting the character thing of gender to Factor.
-# In factor it adds a numeric value alotted to the characters in that column of Gender
+# Converting the character thing of gender to Factor.
+# In factor it adds a numeric value alotted to the characters in that column of Gender, that helps in quick analysis.
+#  Factors are those based on which we will come to some inference/ conclusion, or upon which we will analize our data.
 df$gender = factor(df$gender)
 str(df)
 
