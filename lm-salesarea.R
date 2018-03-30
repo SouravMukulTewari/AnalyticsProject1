@@ -42,6 +42,8 @@ abline(v=c(3,5),h=c(6,10), col=c('red','blue'))
 #Model
 # ?lm
 fit1 = lm(Y ~ X, data=df) # get value of coefficient by linear model
+
+# fit1 = lm(Y ~ X)
 fit1
 coef(fit1) # coeff of fit1
 abline(h=coef(fit1)[1],v=0) # v=vertical line at x= specified, and h= horizontal line at y=specified
