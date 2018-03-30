@@ -14,7 +14,7 @@ str(denco2)
 # head(sales1,n=7)
 # names(sales1)
 
-# sales = sales1  # keeping a backup
+# sales = denco2  # keeping a backup
 sales = denco2
 class(sales)
 str(sales)
@@ -26,6 +26,7 @@ summary(sales)
 str(sales)
 sales$revenue= as.numeric(sales$revenue)
 dim(sales)
+
 # How many unique customers are there in this data frame
 unique(sales$custname)
 length(unique(sales$custname))
@@ -44,6 +45,7 @@ head(df1,5) ## displays first 5 customers
 head(df1[order(df1$x, decreasing=TRUE),], 5)
 
 #Aggregate Formula
+# same thing what we did before, doing it in a different way
 # data=sales means taken from the sales table
 (df2 = aggregate(revenue ~ custname + region, data=sales, FUN=sum))
 head(df2[order(df2$revenue,decreasing=T),],10)
@@ -78,13 +80,12 @@ sales %>% filter(region == '01-East' & revenue > 400000) %>% select(partnum, reg
 sales %>% filter(region == '01-East' | revenue > 400000) %>% select(partnum, region, revenue) %>% head
 
 names(sales)
-# filtering in terms of customer name
-sales %>% group_by(custname) %>% 
-  summarize(Revenue = sum(revenue)) %>% arrange(desc(Revenue))
+length(names(sales))
+# filtering in terms of customer name, used when there are more no. of entries for a particular customer name
+sales %>% group_by(custname) %>% summarize(Revenue = sum(revenue)) %>% arrange(desc(Revenue))
 
-# filtering in terms of region
-sales %>% group_by(region) %>% 
-  summarize(Revenue = sum(revenue)) %>% arrange(desc(Revenue))
+# filtering in terms of region, used when there are more no. of entries for a particular region name
+sales %>% group_by(region) %>% summarize(Revenue = sum(revenue)) %>% arrange(desc(Revenue))
 
 
 library(data.table)
@@ -109,7 +110,9 @@ head(sort(table(sales$custname), decreasing=T), n=10) # Initial 10 inputs
 tail(sort(table(sales$custname), decreasing=T), n=10) # Last 10 values
 
 #xtab
-#
+# Find how many entries of a particular customer name exist in that list and sorting them in decreasing order
+sort(xtabs(~ custname, sales), decreasing=T)
+# Print the first 6 of the previously sorted data
 head(sort(xtabs(~ custname, sales), decreasing=T))
 #
 #
