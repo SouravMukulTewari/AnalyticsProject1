@@ -32,3 +32,4 @@ ndata %>% mutate(predict = ifelse(fitted.results<0.5,0,1)) # This transforms the
 ndata %>% mutate(predict = ifelse(fitted.results<0.5,"NO","YES")) # same as abobe only NO in place of 0 and YES in place of 1
 
 
+
