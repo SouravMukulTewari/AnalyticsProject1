@@ -63,4 +63,35 @@ k <- ols_step_all_possible(model)
 plot(k)
 k
 
+
+
 # install.packages("CHAID",repos="http://R-Forge.R-project.org")
+
+# Dummy variable
+df = mtcars
+summary(df)
+df$cyl = factor(df$cyl)
+
+# M1 = lm(mpg ~ wt + cyl + am, data=df) # am not significant so drop it from the model, so vehicle being automatic or not does not affect the mileage
+M1 = lm(mpg ~ wt + cyl, data=df)
+summary(M1)
+summary(df$cyl)
+
+# These (Below) are the different values that we are passing in the model to find the mileage for those corresponding values
+data.frame(wt=c(2,3), cyl=factor(c(4,6)))
+predict(M1, newdata = data.frame(wt=c(2,3), cyl=factor(c(4,6))))
+predict(M1, newdata = data.frame(wt=c(3.5,5.2), cyl=factor(c(8,6))))
+summary(df)
+
+# first cyl4 is taken as reference model(so no emphasize on cyl4), then cyl 6 leads to lesser mileage and now going to cyl 8 much lesser would be the mileage, so higher is the negative coefficient for cyl8 as compared to cyl6
+
+# The below equations are meant for understanding how R predicts the result at back end
+
+# Now in this case seeking summary(M1) if it so happens that cyl 6 is not significant but cyl 8 is significant then also we have to keep the cylinder.
+# But if none of the cylinder thing comes significant then we have to entirely remove it from our Model
+
+# y4 = 33.99 + -3.2 * wt + 0
+# y6 = 33.99 + -3.2 * wt + -4.2 * cyl6(=1)
+# y8 = 33.99 + -3.2 * wt + -4.2 * cyl8(=1)
+
+head(df)
