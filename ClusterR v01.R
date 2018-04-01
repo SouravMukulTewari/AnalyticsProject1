@@ -46,3 +46,5 @@ data_clus_2$Cust_id  # Prints those customer ID that are in cluster2
 # write.csv(data_clus_2[,1], file = "./data/data_clus_2.csv") # for storing the above result in a csv file
 
 # names and colnames are same -> gives the same result
+# Example
+# names(mtcars) == colnames(mtcars)
